@@ -11,7 +11,7 @@ def main():
 			headers: {
 				"Content-Type": "application/json"
 			},
-			body:{
+			body: {
 				"hello": "world",
 				"obj": {
 					'x': 15,
@@ -21,7 +21,7 @@ def main():
 		}
 	) \
 	.then(
-		lambda res: print(res.content),
+		lambda res: print(res.body),
 		lambda err: print(f"An error occurred: {type(err).__name__}: {err}")
 	)
 

@@ -1,70 +1,47 @@
-from typing import Literal, Union, TypedDict
+from ._types import *
+from httpx import Response as HTTPXResponse, Headers as HTTPXHeaders
+from typing import TypedDict
+
+class Response:
+	def __init__(self, response: HTTPXResponse):
+		self._response = response
+
+	@property
+	def body(self) -> bytes:
+		self._body_used = None
+		return self._response.content
+
+	@property
+	def bodyUsed(self) -> bool:
+		return hasattr(self, "_body_used")
+
+	@property
+	def headers(self) -> HTTPXHeaders:
+		return self._response.headers
+
+	@property
+	def ok(self) -> bool:
+		return (200 <= self._response.status_code <= 299
+)
+	@property
+	def status(self) -> int:
+		return self._response.status_code
+
+	@property
+	def statusText(self) -> str:
+		return # FIX
 
 class Options(TypedDict):
-	method: Union[
-		Literal["GET"],
-		Literal["POST"],
-		Literal["DELETE"],
-		Literal["HEAD"],
-		Literal["PUT"],
-		Literal["CONNECT"],
-		Literal["OPTIONS"],
-		Literal["TRACE"],
-		Literal["PATCH"],
-		str
-	]
-
-	headers: Union[dict[str, str], None]
-	body: Union[dict, None]
-	
-	mode: Union[
-		Literal["cors"],
-		Literal["no-cors"],
-		Literal["same-origin"],
-		str,
-		None
-	]
-
-	credentials: Union[
-		Literal["omit"],
-		Literal["same-origin"],
-		Literal["include"],
-		None
-	]
-
-	cache: Union[
-		Literal["default"], 
-		Literal["no-store"], 
-		Literal["reload"], 
-		Literal["no-cache"], 
-		Literal["force-cache"], 
-		Literal["only-if-cached"],
-		None
-	]
-
-	redirect: Union[
-		Literal["follow"],
-		Literal["error"],
-		Literal["manual"],
-		None
-	]
-
-	referrrer: Union[str, None]
-
-	referrerPolicy: Union[
-		Literal["no-referrer"], 
-		Literal["no-referrer-when-downgrade"], 
-		Literal["same-origin"], 
-		Literal["origin"], 
-		Literal["strict-origin"], 
-		Literal["origin-when-cross-origin"],
-		Literal["strict-origin-when-cross-origin"],
-		Literal["unsafe-url"],
-		None
-	]
-
-	integrity: Union[str, None]
-	keepalive: Union[bool, None]
-
+	method: Method # done
+	headers: Headers # done
+	body: Body # done
+	mode: Mode # done
+	credentials: Credentials
+	cache: Cache # done
+	redirect: Redirect # done
+	referrer: Referrer # done
+	referrerPolicy: ReferrerPolicy # done
+	integrity: Integrity
+	keepalive: KeepAlive # done
 
 
