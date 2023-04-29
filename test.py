@@ -1,15 +1,13 @@
 from fetch import fetch
-from fetch.make_it_look_like_js import (
-	method, headers, body
-)
+from fetch.autocomplete import *
 
 def main():
 	fetch(
 		"https://google.com",
 		{
-			method: "GET",
+			method: GET,
 			headers: {
-				"Content-Type": "application/json"
+				ContentType: "application/json"
 			},
 			body: {
 				"hello": "world",
@@ -17,7 +15,7 @@ def main():
 					'x': 15,
 					"list": ['a', 'b', 'c']
 				}
-			}
+			},
 		}
 	) \
 	.then(
